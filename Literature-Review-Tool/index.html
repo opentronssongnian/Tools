@@ -1,0 +1,2251 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Opentrons Literature Summary</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.0/css/bootstrap.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <style>
+      :root {
+        --primary-blue: #0069ff;
+        --accent-teal: #00c1d4;
+        --dark-bg: #1a1d23;
+        --light-bg: #e6edf3; /* Changed from #f0f4f8 to a softer, less bright color */
+        --light-bg-end: #d0dae5; /* Changed from #d9e2ec to a softer, less bright color */
+        --text-color: #333;
+        --card-bg: #ffffff; /* Fixed spelling error */
+        --header-color: #1a1d23;
+        --border-color: #e2e8f0;
+        --modal-bg: white;
+        --table-header-bg: rgba(0, 105, 255, 0.05);
+        --table-header-color: #0069ff;
+        --star-color: #ffc107;
+        --star-bg: rgba(0, 193, 212, 0.1);
+
+        /* Added category color system for light mode */
+        --cat-color-1: #0055cc; /* Deeper blue */
+        --cat-color-2: #0099b3; /* Deeper teal */
+        --cat-color-3: #00964b; /* Deeper green */
+        --cat-color-4: #6ca300; /* Deeper yellow-green */
+        --cat-color-5: #b39000; /* Deeper yellow */
+        --cat-color-6: #b36a00; /* Deeper orange */
+        --cat-color-7: #cc0000; /* Deeper red */
+        --cat-color-8: #b3009e; /* Deeper pink */
+        --cat-color-9: #6600cc; /* Deeper purple */
+      }
+      [data-theme="dark"] {
+        --primary-blue: #4d94ff;
+        --accent-teal: #33d6e4;
+        --light-bg: #2a2f3a; /* Adjusted to a softer dark background */
+        --light-bg-end: #1f242d; /* Adjusted to a softer dark background */
+        --text-color: #dcdcdc; /* Adjusted text color to reduce contrast */
+        --card-bg: #333a47; /* Softer card background */
+        --header-color: #dcdcdc;
+        --border-color: #4a4f5a;
+        --modal-bg: #3a414e;
+        --table-header-bg: rgba(77, 148, 255, 0.1);
+        --table-header-color: #4d94ff;
+        --star-color: #ffd54f;
+        --star-bg: rgba(0, 193, 212, 0.2);
+
+        /* Improved dark mode category colors */
+        --cat-color-1: #5a9dff;
+        --cat-color-2: #5ad2ff;
+        --cat-color-3: #5affb0;
+        --cat-color-4: #a8ff5a;
+        --cat-color-5: #ffe75a;
+        --cat-color-6: #ffad5a;
+        --cat-color-7: #ff6e6e;
+        --cat-color-8: #ff5add;
+        --cat-color-9: #c05aff;
+
+        /* Softer dark mode category colors for better readability */
+        --cat-color-1: #6e9ee6; /* Softer blue */
+        --cat-color-2: #6dcbdb; /* Softer teal */
+        --cat-color-3: #7adea1; /* Softer green */
+        --cat-color-4: #b3d978; /* Softer yellow-green */
+        --cat-color-5: #e6d07d; /* Softer yellow */
+        --cat-color-6: #e6ac7d; /* Softer orange */
+        --cat-color-7: #e68a8a; /* Softer red */
+        --cat-color-8: #da86c9; /* Softer pink */
+        --cat-color-9: #b586e6; /* Softer purple */
+      }
+
+      /* Added animation for gradient and texture */
+      @keyframes gradientAnimation {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      /* Added subtle texture */
+      @keyframes textureFloat {
+        0% {
+          transform: translate(0, 0);
+        }
+        50% {
+          transform: translate(5px, 5px);
+        }
+        100% {
+          transform: translate(0, 0);
+        }
+      }
+
+      /* Updated the background to include animated gradient and subtle motion effects */
+      body {
+        background: linear-gradient(135deg, var(--light-bg) 0%, var(--light-bg-end) 100%);
+        font-family: "Inter", sans-serif;
+        color: var(--text-color);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow-x: hidden;
+      }
+
+      /* Added dynamic background elements */
+      body::before {
+        content: "";
+        position: fixed;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(
+          -45deg,
+          rgba(0, 105, 255, 0.03),
+          rgba(0, 193, 212, 0.03),
+          rgba(240, 244, 248, 0.05),
+          rgba(217, 226, 236, 0.03)
+        );
+        background-size: 400% 400%;
+        z-index: -2;
+        animation: gradientAnimation 15s ease infinite;
+      }
+
+      /* Subtle texture overlay */
+      body::after {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 100%;
+        width: 100%;
+        height: 100%;
+        background-image: radial-gradient(circle at 25px 25px, rgba(255, 255, 255, 0.2) 2%, transparent 0%),
+          radial-gradient(circle at 75px 75px, rgba(255, 255, 255, 0.2) 2%, transparent 0%);
+        background-size: 100px 100px;
+        z-index: -1;
+        opacity: 0.4;
+        pointer-events: none;
+        animation: textureFloat 10s ease-in-out infinite;
+      }
+
+      /* Dark mode adjustments */
+      [data-theme="dark"] body::before {
+        background: linear-gradient(
+          -45deg,
+          rgba(77, 148, 255, 0.05),
+          rgba(51, 214, 228, 0.05),
+          rgba(30, 36, 48, 0.05),
+          rgba(18, 24, 32, 0.05)
+        );
+      }
+
+      [data-theme="dark"] body::after {
+        background-image: radial-gradient(circle at 25px 25px, rgba(255, 255, 255, 0.05) 2%, transparent 0%),
+          radial-gradient(circle at 75px 75px, rgba(255, 255, 255, 0.05) 2%, transparent 0%);
+        opacity: 0.2;
+      }
+
+      /* Dark mode optimization - enhanced card shadows */
+      [data-theme="dark"] .list-group-item {
+        box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4), 0 2px 6px -1px rgba(0, 0, 0, 0.3),
+          inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+      }
+
+      [data-theme="dark"] .modal-content {
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.4),
+          inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+      }
+
+      /* Category color tags */
+      .category-tag {
+        display: inline-block;
+        padding: 0.2rem 0.6rem;
+        border-radius: 12px;
+        font-size: 0.8rem;
+        margin-right: 0.4rem;
+        margin-bottom: 0.4rem;
+        color: white;
+        font-weight: 500;
+      }
+
+      /* Removed old gradient background */
+      .container::before {
+        display: none;
+      }
+
+      h1,
+      h5 {
+        color: var(--header-color);
+        transition: color 0.3s ease;
+      }
+      h1 {
+        font-weight: 600;
+        margin-bottom: 2rem;
+        position: relative;
+        padding-left: 1.5rem;
+      }
+      h1:before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 8px;
+        height: 80%;
+        background: var(--accent-teal);
+        border-radius: 4px;
+      }
+      .list-group-item {
+        border: none;
+        margin-bottom: 1rem;
+        border-radius: 12px !important;
+        /* Enhanced shadow effect with stronger contrast and depth */
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15), 0 3px 6px rgba(0, 0, 0, 0.1),
+          inset 1px 1px 1px rgba(255, 255, 255, 0.25);
+        transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+        background: var(--card-bg);
+      }
+      .list-group-item:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.15),
+          inset 1px 1px 1px rgba(255, 255, 255, 0.3);
+      }
+      .btn-primary {
+        background: var(--primary-blue);
+        border: none;
+        border-radius: 8px;
+        padding: 0.75rem 1.5rem;
+        font-weight: 500;
+        transition: all 0.2s ease;
+      }
+      .btn-primary:hover {
+        background: #0056cc;
+        transform: translateY(-1px);
+      }
+      #searchBar {
+        border-radius: 8px;
+        border: 2px solid var(--border-color);
+        padding: 1rem;
+        transition: all 0.2s ease;
+        background-color: var(--card-bg);
+        color: var(--text-color);
+      }
+      #searchBar:focus {
+        border-color: var(--primary-blue);
+        box-shadow: 0 0 0 3px rgba(0, 105, 255, 0.1);
+      }
+      .btn-outline-primary {
+        border-radius: 20px;
+        border: 2px solid var(--primary-blue);
+        color: var(--primary-blue);
+        margin: 0.25rem;
+        transition: all 0.2s ease;
+      }
+      .btn-outline-primary:hover,
+      .btn-outline-primary.active {
+        background: var(--primary-blue);
+        color: white;
+      }
+      .star-btn {
+        background: var(--star-bg);
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+        color: var(--star-color);
+        border: none;
+      }
+      .star-btn:hover {
+        background: var(--accent-teal);
+        transform: scale(1.1);
+      }
+      .modal-content {
+        border-radius: 16px;
+        border: none;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        background-color: var(--modal-bg);
+      }
+      .detail-table th {
+        background: var(--table-header-bg);
+        color: var (--table-header-color);
+      }
+      .detail-table td,
+      .detail-table th {
+        color: var(--text-color);
+        border-color: var(--border-color);
+      }
+      .modal-body {
+        max-height: 70vh;
+        overflow-y: auto;
+      }
+      .modal-header {
+        border-color: var(--border-color);
+      }
+      .modal-header .close {
+        color: var(--text-color);
+      }
+      .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+      }
+      .page-item.active .page-link {
+        background-color: var(--primary-blue);
+        border-color: var(--primary-blue);
+      }
+      .page-link {
+        color: var(--primary-blue);
+      }
+      .paper-title {
+        cursor: pointer;
+        color: var(--primary-blue);
+        text-decoration: none;
+        font-size: clamp(0.9rem, 3vw, 1.2rem);
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        line-height: 1.4;
+        transition: all 0.3s ease;
+      }
+      .paper-title:hover {
+        text-decoration: underline;
+      }
+      .starred {
+        background-color: rgba(255, 243, 205, 0.5);
+      }
+      [data-theme="dark"] .starred {
+        background-color: rgba(255, 193, 7, 0.15);
+      }
+      .btn-row button {
+        margin: 0.2rem;
+      }
+      .btn-row {
+        margin-bottom: 1rem;
+      }
+      /* Improved indentation system */
+      .bullet-indent-l1 {
+        margin-left: 10px;
+      }
+      .bullet-indent-l2 {
+        margin-left: 20px;
+      }
+      .list-break {
+        margin-bottom: 0.8rem;
+      }
+      /* Category selection state */
+      .btn-outline-primary.active {
+        background-color: var(--primary-blue);
+        color: white;
+      }
+      .selected-categories,
+      .selected-years {
+        margin-top: 0.5rem;
+      }
+      .selected-category,
+      .selected-year {
+        background-color: rgba(0, 105, 255, 0.1);
+        border: 1px solid rgba(0, 105, 255, 0.2);
+        padding: 0.2rem 0.5rem;
+        border-radius: 4px;
+        margin-right: 0.5rem;
+        display: inline-block;
+        margin-bottom: 0.5rem;
+        color: var(--primary-blue);
+        transition: all 0.3s ease;
+      }
+      [data-theme="dark"] .selected-category,
+      [data-theme="dark"] .selected-year {
+        background-color: rgba(77, 148, 255, 0.2);
+        border-color: rgba(77, 148, 255, 0.3);
+      }
+      .selected-category .remove,
+      .selected-year .remove {
+        cursor: pointer;
+        margin-left: 0.3rem;
+        color: rgba(0, 105, 255, 0.5);
+      }
+      .selected-category .remove:hover,
+      .selected-year .remove:hover {
+        color: var(--primary-blue);
+      }
+      /* Loading spinner */
+      .spinner-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.3);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 2000;
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      .spinner-container.show {
+        visibility: visible;
+        opacity: 1;
+      }
+      .spinner-border {
+        width: 3rem;
+        height: 3rem;
+      }
+      /* Card view */
+      .card-view .list-group-item {
+        padding: 1.25rem;
+        display: flex;
+        flex-direction: column;
+      }
+      .card-view .list-group {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        grid-gap: 1rem;
+      }
+      .card-view .paper-title {
+        font-size: 1.1rem;
+        margin-bottom: 0.75rem;
+      }
+      .card-view .star-btn {
+        align-self: flex-end;
+        margin-top: 0.5rem;
+      }
+      /* Feedback message */
+      .feedback-message {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        padding: 10px 15px;
+        background: var(--primary-blue);
+        color: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        z-index: 1050;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.3s, transform 0.3s;
+      }
+      .feedback-message.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      /* Tour tooltip */
+      .tour-tooltip {
+        position: absolute;
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 15px;
+        box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+        max-width: 250px;
+        z-index: 1100;
+        transition: opacity 0.3s;
+      }
+      .tour-tooltip h5 {
+        margin-top: 0;
+        font-size: 1rem;
+      }
+      .tour-tooltip p {
+        font-size: 0.9rem;
+      }
+      .tour-tooltip .btn {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.8rem;
+      }
+      /* Filter summary */
+      .filter-summary {
+        background-color: var(--card-bg);
+        padding: 10px 15px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+      }
+      .filter-summary h6 {
+        margin-bottom: 0.5rem;
+        color: var (--primary-blue);
+      }
+      .filter-summary .badge {
+        background-color: rgba(0, 105, 255, 0.1);
+        color: var (--primary-blue);
+        margin-right: 5px;
+      }
+      /* Toggle switches */
+      .toggle-container {
+        display: flex;
+        align-items: center;
+        margin: 0 10px;
+      }
+      .toggle-switch {
+        position: relative;
+        display: inline-block;
+        width: 48px;
+        height: 24px;
+      }
+      .toggle-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+      .toggle-slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: 0.4s;
+        border-radius: 24px;
+      }
+      .toggle-slider:before {
+        position: absolute;
+        content: "";
+        height: 18px;
+        width: 18px;
+        left: 3px;
+        bottom: 3px;
+        background-color: white;
+        transition: 0.4s;
+        border-radius: 50%;
+      }
+      input:checked + .toggle-slider {
+        background-color: var(--primary-blue);
+      }
+      input:focus + .toggle-slider {
+        box-shadow: 0 0 1px var(--primary-blue);
+      }
+      input:checked + .toggle-slider:before {
+        transform: translateX(24px);
+      }
+      .toggle-label {
+        margin: 0 8px;
+        font-size: 0.9rem;
+      }
+      /* Modal navigation */
+      .modal-nav-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 15px;
+      }
+      .modal-nav-buttons button {
+        padding: 5px 15px;
+      }
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        .card-view .list-group {
+          grid-template-columns: 1fr;
+        }
+        .container {
+          padding: 0 10px;
+        }
+        .btn-row {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+        .btn-row button {
+          margin: 0.1rem;
+          font-size: 0.9rem;
+          padding: 0.4rem 0.8rem;
+        }
+        .modal-dialog {
+          margin: 0.5rem;
+        }
+        h1 {
+          font-size: 1.8rem;
+        }
+      }
+      /* Help button */
+      .help-btn {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: var(--primary-blue);
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.5rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+        z-index: 1030;
+        transition: all 0.3s ease;
+      }
+      .help-btn:hover {
+        transform: scale(1.1);
+      }
+      /* Settings bar */
+      .settings-bar {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        padding: 0.5rem 0;
+        margin-bottom: 1rem;
+      }
+      /* Fixed back to top button styles */
+      .back-to-top {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: var(--primary-blue);
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.5rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+        z-index: 1030;
+        transition: all 0.3s ease;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(20px);
+      }
+
+      .back-to-top.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+
+      .back-to-top:hover {
+        transform: translateY(-3px) scale(1.05);
+        background-color: var(--accent-teal);
+      }
+
+      /* Fullscreen modal styles */
+      .modal-fullscreen {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        top: 0;
+        left: 0;
+        position: fixed;
+        z-index: 1055;
+        overflow: auto;
+      }
+
+      .modal-fullscreen .modal-content {
+        height: 100%;
+        border-radius: 0;
+      }
+
+      /* Category button colors */
+      .category-btn {
+        color: white;
+        font-weight: 500;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 12px;
+        margin: 5px;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+      .category-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Unified category button and tag colors */
+      .category-btn,
+      .category-tag {
+        color: white;
+        font-weight: 500;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 12px;
+        margin: 5px;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+      .category-btn:hover,
+      .category-tag:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Particle background styles */
+      .particles-background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -10;
+        pointer-events: none;
+      }
+
+      /* Card expand/collapse animation effect */
+      .card-expand {
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow: hidden;
+        max-height: 0;
+        opacity: 0;
+      }
+
+      .card-expand.show {
+        max-height: 1000px;
+        opacity: 1;
+      }
+
+      /* Modal enter/exit animation */
+      .modal.fade .modal-dialog {
+        transform: translate(0, -50px) scale(0.95);
+        opacity: 0;
+        transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+      }
+
+      .modal.show .modal-dialog {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+      }
+
+      /* Staggered animation effect for different elements */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translate3d(0, 30px, 0);
+        }
+        to {
+          opacity: 1;
+          transform: translate3d(0, 0, 0);
+        }
+      }
+
+      .staggered-fade-in {
+        opacity: 0;
+        animation: fadeInUp 0.6s ease forwards;
+      }
+
+      /* Theme customizer styles */
+      .theme-customizer {
+        position: fixed;
+        top: 50%;
+        right: 0;
+        transform: translateY(-50%);
+        width: 300px;
+        background: var(--card-bg);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        border-radius: 8px 0 0 8px;
+        z-index: 1050;
+        transition: transform 0.3s ease;
+        transform: translateX(100%);
+      }
+
+      .theme-customizer.show {
+        transform: translateX(0);
+      }
+
+      .theme-customizer-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 15px;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .theme-customizer-body {
+        padding: 15px;
+      }
+
+      .color-picker-group {
+        margin-bottom: 10px;
+      }
+
+      .color-picker-group label {
+        display: block;
+        margin-bottom: 5px;
+        color: var(--text-color);
+      }
+
+      .theme-customizer-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.3);
+        z-index: 1040;
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .theme-customizer-backdrop.show {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .theme-toggle-btn {
+        position: fixed;
+        bottom: 80px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: var(--primary-blue);
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.5rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+        z-index: 1030;
+        transition: all 0.3s ease;
+      }
+
+      .theme-toggle-btn:hover {
+        transform: scale(1.1);
+      }
+      
+      /* Particle toggle button */
+      .particle-toggle-btn {
+        position: fixed;
+        bottom: 140px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: var(--primary-blue);
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.5rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+        z-index: 1030;
+        transition: all 0.3s ease;
+      }
+
+      .particle-toggle-btn:hover {
+        transform: scale(1.1);
+      }
+
+      /* Search highlight styles */
+      .search-highlight {
+        background-color: rgba(255, 208, 0, 0.3);
+        padding: 2px 0;
+        border-radius: 2px;
+        animation: highlightPulse 2s infinite;
+      }
+
+      [data-theme="dark"] .search-highlight {
+        background-color: rgba(255, 208, 0, 0.2);
+      }
+
+      @keyframes highlightPulse {
+        0% {
+          background-color: rgba(255, 208, 0, 0.3);
+        }
+        50% {
+          background-color: rgba(255, 208, 0, 0.5);
+        }
+        100% {
+          background-color: rgba(255, 208, 0, 0.3);
+        }
+      }
+
+      /* Progressive text display for long content */
+      .progressive-text {
+        overflow: hidden;
+        position: relative;
+        max-height: 150px;
+        transition: max-height 0.5s ease;
+      }
+
+      .progressive-text.expanded {
+        max-height: none;
+      }
+
+      .progressive-text-fade {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 50px;
+        background: linear-gradient(to bottom, transparent, var(--card-bg));
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        cursor: pointer;
+      }
+
+      .progressive-text-fade span {
+        background-color: var(--primary-blue);
+        color: white;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        display: inline-block;
+        margin-bottom: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease;
+      }
+
+      .progressive-text-fade:hover span {
+        transform: translateY(-3px);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Add particle background container -->
+    <div id="particles-background" class="particles-background"></div>
+
+    <!-- Loading Spinner -->
+    <div class="spinner-container" id="loadingSpinner">
+      <div class="spinner-border text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+    <!-- Feedback Message -->
+    <div class="feedback-message" id="feedbackMessage"></div>
+    <!-- Help Button -->
+    <div class="help-btn" id="helpButton">
+      <i class="fas fa-question"></i>
+    </div>
+    <!-- Theme Customization Panel -->
+    <div id="themeCustomizer" class="theme-customizer">
+      <div class="theme-customizer-header">
+        <h5>Customize Theme</h5>
+        <button class="close-customizer">&times;</button>
+      </div>
+      <div class="theme-customizer-body">
+        <div class="color-picker-group">
+          <label>Primary Color</label>
+          <input type="color" id="primaryColorPicker" value="#0069ff" />
+        </div>
+        <div class="color-picker-group">
+          <label>Accent Color</label>
+          <input type="color" id="accentColorPicker" value="#00c1d4" />
+        </div>
+        <div class="color-picker-group">
+          <label>Background Start</label>
+          <input type="color" id="bgStartColorPicker" value="#f0f4f8" />
+        </div>
+        <div class="color-picker-group">
+          <label>Background End</label>
+          <input type="color" id="bgEndColorPicker" value="#d9e2ec" />
+        </div>
+        <button id="resetThemeBtn" class="btn btn-secondary btn-sm mt-3">Reset to Default</button>
+        <button id="saveThemeBtn" class="btn btn-primary btn-sm mt-3">Apply Theme</button>
+      </div>
+    </div>
+
+    <!-- Background Element for Theme Customization Toggle -->
+    <div class="theme-customizer-backdrop"></div>
+
+    <!-- Theme Customization Toggle Button -->
+    <div class="theme-toggle-btn" id="themeToggleBtn">
+      <i class="fas fa-palette"></i>
+    </div>
+    
+    <!-- Particle Toggle Button -->
+    <div class="particle-toggle-btn" id="particleToggleBtn">
+      <i class="fas fa-atom"></i>
+    </div>
+    
+    <div class="container">
+      <div class="settings-bar">
+        <div class="toggle-container">
+          <span class="toggle-label"><i class="fas fa-list"></i></span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="viewToggle" />
+            <span class="toggle-slider"></span>
+          </label>
+          <span class="toggle-label"><i class="fas fa-th"></i></span>
+        </div>
+        <div class="toggle-container">
+          <span class="toggle-label"><i class="fas fa-sun"></i></span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="themeToggle" />
+            <span class="toggle-slider"></span>
+          </label>
+          <span class="toggle-label"><i class="fas fa-moon"></i></span>
+        </div>
+      </div>
+      <h1>Opentrons Literature Summary</h1>
+      <!-- Fixed upload section -->
+      <div id="uploadSection" class="mb-4">
+        <label class="mr-2">Choose File</label>
+        <input type="file" id="excelFile" accept=".xlsx, .xls" />
+        <button id="loadFile" class="btn btn-primary ml-2">Load Excel File</button>
+      </div>
+      <!-- Filter summary -->
+      <div id="filterSummary" class="filter-summary" style="display: none">
+        <h6><i class="fas fa-filter"></i> Active Filters</h6>
+        <div id="filterSummaryContent"></div>
+      </div>
+      <!-- Year filter -->
+      <h5>Year</h5>
+      <div id="yearButtons" class="btn-row"></div>
+      <div id="selectedYears" class="selected-years"></div>
+      <button id="resetYearFilter" class="btn btn-secondary mb-3">Reset Year Filter</button>
+      <!-- Category filter -->
+      <h5>Category/Field</h5>
+      <div id="categoryButtons" class="btn-row"></div>
+      <div id="selectedCategories" class="selected-categories"></div>
+      <button id="resetCategoryFilter" class="btn btn-secondary mb-3">Reset Category Filter</button>
+      <!-- Search bar -->
+      <div class="mb-4">
+        <input
+          type="text"
+          id="searchBar"
+          class="form-control"
+          placeholder="Search any text (title, application, summary, etc.)"
+        />
+      </div>
+      <!-- Paper list -->
+      <div id="paperList">
+        <ul class="list-group"></ul>
+      </div>
+      <!-- Pagination -->
+      <nav>
+        <ul class="pagination" id="pagination"></ul>
+      </nav>
+      <!-- Detail modal -->
+      <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Paper Details</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <table class="table table-bordered detail-table">
+                <tbody></tbody>
+              </table>
+            </div>
+            <div class="modal-nav-buttons">
+              <button class="btn btn-outline-primary" id="prevPaper" disabled>
+                <i class="fas fa-arrow-left"></i> Previous
+              </button>
+              <button class="btn btn-outline-primary" id="nextPaper" disabled>
+                Next <i class="fas fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Starred download -->
+      <div id="starSection" class="mt-4 d-flex justify-content-between">
+        <button id="downloadStarred" class="btn btn-success">Download Starred Papers (TXT)</button>
+        <button id="clearAllStars" class="btn btn-outline-warning" style="display: none">Clear All Stars</button>
+      </div>
+    </div>
+    <!-- Back to top button -->
+    <div class="back-to-top" id="backToTop">
+      <i class="fas fa-arrow-up"></i>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+    <!-- Add particle animation library -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+      let publications = [];
+      let starredPapers = new Set();
+      let isCardView = false; // Default to list view
+      let selectedYears = []; // Changed to array to support multi-select
+      let selectedCategories = []; // Changed to array to support multi-select
+      let searchTerm = "";
+      let currentPage = 1;
+      let itemsPerPage = 50;
+      let currentDetailIndex = -1;
+      let currentFilteredItems = []; // Used to store currently filtered items for detail page navigation
+      let scrollPosition = 0; // Used to remember scroll position
+
+      // Set initial state after page load
+      document.addEventListener("DOMContentLoaded", function () {
+        // Check user preferences
+        checkUserPreferences();
+
+        // Initialize help button
+        initHelp();
+
+        // Initialize theme toggle
+        document.getElementById("themeToggle").addEventListener("change", toggleTheme);
+
+        // Initialize view toggle
+        document.getElementById("viewToggle").addEventListener("change", toggleView);
+
+        // Listen for clear all stars button
+        document.getElementById("clearAllStars").addEventListener("click", clearAllStars);
+
+        // Listen for detail page navigation buttons
+        document.getElementById("prevPaper").addEventListener("click", showPreviousDetail);
+        document.getElementById("nextPaper").addEventListener("click", showNextDetail);
+
+        // Initialize back to top button
+        initBackToTop();
+
+        $("#detailModal").on("show.bs.modal", function () {
+          scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+        });
+
+        $("#detailModal").on("hidden.bs.modal", function () {
+          setTimeout(() => {
+            window.scrollTo({
+              top: scrollPosition,
+              behavior: "auto",
+            });
+          }, 50);
+        });
+
+        // Initialize particle background
+        initParticlesBackground();
+      });
+
+      function checkUserPreferences() {
+        // Check theme preference
+        const savedTheme = localStorage.getItem("theme") || "light";
+        document.documentElement.setAttribute("data-theme", savedTheme);
+        document.getElementById("themeToggle").checked = savedTheme === "dark";
+
+        // Check view preference
+        const savedView = localStorage.getItem("viewMode") || "list";
+        isCardView = savedView === "card";
+        document.getElementById("viewToggle").checked = isCardView;
+        if (isCardView) {
+          document.getElementById("paperList").classList.add("card-view");
+        }
+      }
+
+      function toggleTheme() {
+        const isDark = document.getElementById("themeToggle").checked;
+        const theme = isDark ? "dark" : "light";
+        document.documentElement.setAttribute("data-theme", theme);
+        localStorage.setItem("theme", theme);
+      }
+
+      function toggleView() {
+        isCardView = document.getElementById("viewToggle").checked;
+        const viewMode = isCardView ? "card" : "list";
+        if (isCardView) {
+          document.getElementById("paperList").classList.add("card-view");
+        } else {
+          document.getElementById("paperList").classList.remove("card-view");
+        }
+
+        localStorage.setItem("viewMode", viewMode);
+        if (publications.length > 0) {
+          // If data is already loaded, redisplay current page
+          displayPublications(currentPage);
+        }
+      }
+
+      function showLoading() {
+        document.getElementById("loadingSpinner").classList.add("show");
+      }
+
+      function hideLoading() {
+        document.getElementById("loadingSpinner").classList.remove("show");
+      }
+
+      function showFeedback(message, isError = false) {
+        const feedbackEl = document.getElementById("feedbackMessage");
+        feedbackEl.textContent = message;
+        feedbackEl.style.backgroundColor = isError ? "#dc3545" : "#0069ff";
+        feedbackEl.classList.add("show");
+        setTimeout(() => {
+          feedbackEl.classList.remove("show");
+        }, 3000);
+      }
+
+      function clearAllStars() {
+        if (confirm("Are you sure you want to clear all starred papers?")) {
+          starredPapers.clear();
+          document.getElementById("clearAllStars").style.display = "none";
+          displayPublications(currentPage);
+          showFeedback("All stars cleared");
+        }
+      }
+
+      function updateFilterSummary() {
+        const summaryEl = document.getElementById("filterSummary");
+        const contentEl = document.getElementById("filterSummaryContent");
+        contentEl.innerHTML = "";
+        let hasFilters = false;
+
+        // Year filter
+        if (selectedYears.length > 0) {
+          hasFilters = true;
+          const yearSpan = document.createElement("span");
+          yearSpan.innerHTML = "<strong>Years:</strong> ";
+          selectedYears.forEach((year) => {
+            const badge = document.createElement("span");
+            badge.className = "badge";
+            badge.textContent = year;
+            yearSpan.appendChild(badge);
+          });
+          contentEl.appendChild(yearSpan);
+          contentEl.appendChild(document.createElement("br"));
+        }
+
+        // Category filter
+        if (selectedCategories.length > 0) {
+          hasFilters = true;
+          const catSpan = document.createElement("span");
+          catSpan.innerHTML = "<strong>Categories:</strong> ";
+          selectedCategories.forEach((cat) => {
+            const badge = document.createElement("span");
+            badge.className = "badge";
+            badge.textContent = cat;
+            catSpan.appendChild(badge);
+          });
+          contentEl.appendChild(catSpan);
+          contentEl.appendChild(document.createElement("br"));
+        }
+
+        // Search term
+        if (searchTerm) {
+          hasFilters = true;
+          const searchSpan = document.createElement("span");
+          searchSpan.innerHTML = `<strong>Search:</strong> <span class="badge">${searchTerm}</span>`;
+          contentEl.appendChild(searchSpan);
+        }
+
+        // Show or hide filter summary
+        summaryEl.style.display = hasFilters ? "block" : "none";
+      }
+
+      function parseExcelDate(excelDate) {
+        if (typeof excelDate === "number") {
+          // Handle Excel numeric dates
+          const dateObj = XLSX.SSF.parse_date_code(excelDate);
+          return dateObj ? new Date(dateObj.y, dateObj.m - 1, dateObj.d) : null;
+        }
+        // Try parsing string dates
+        const d = new Date(excelDate);
+        return isNaN(d.getTime()) ? null : d;
+      }
+
+      function formatDateMDY(dateObj) {
+        if (!dateObj) return "";
+        const mm = String(dateObj.getMonth() + 1).padStart(2, "0");
+        const dd = String(dateObj.getDate()).padStart(2, "0");
+        const yyyy = dateObj.getFullYear();
+        return `${mm}/${dd}/${yyyy}`;
+      }
+
+      // Improved text transformation function
+      function transformSummary(value) {
+        if (!value) return "";
+
+        // Handle level 1 lists (with line breaks)
+        value = value.replace(/(\d+\.\s+)(.*)/g, (match, p1, p2) => {
+          return `<div class="list-break">${p1}${p2}</div>`;
+        });
+
+        // Handle level 2 lists (without line breaks)
+        value = value.replace(/(\s{4,}\d+\.\s+)(.*)/g, (match, p1, p2) => {
+          return `<div class="bullet-indent-l1">${p1}${p2}</div>`;
+        });
+
+        // Handle level 3 lists (symbol lists)
+        value = value.replace(/([•\-]\s+)(.*)/g, (match, p1, p2) => {
+          return `<div class="bullet-indent-l2">${p1}${p2}</div>`;
+        });
+
+        // Handle plain URL links
+        value = value.replace(/(https?:\/\/[^\s,)]+)/g, '<a href="$1" target="_blank">$1</a>');
+
+        // Handle Markdown link format [text](url)
+        value = value.replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g, (match, text, url) => {
+          return `${text}：<a href="${url}" target="_blank">${url}</a>`;
+        });
+
+        return value;
+      }
+
+      function parseMultiLine(str) {
+        if (!str) return [];
+        return str
+          .split(/\r?\n/)
+          .map((s) => s.trim())
+          .filter((s) => s);
+      }
+
+      function parseCategoryField(str) {
+        return parseMultiLine(str);
+      }
+
+      function showPreviousDetail() {
+        if (currentDetailIndex > 0) {
+          currentDetailIndex--;
+          showDetailModal(currentFilteredItems[currentDetailIndex]);
+        }
+      }
+
+      function showNextDetail() {
+        if (currentDetailIndex < currentFilteredItems.length - 1) {
+          currentDetailIndex++;
+          showDetailModal(currentFilteredItems[currentDetailIndex]);
+        }
+      }
+
+      function initHelp() {
+        document.getElementById("helpButton").addEventListener("click", showTour);
+        // Check if first visit
+        if (localStorage.getItem("visitedBefore") !== "true") {
+          setTimeout(() => {
+            showTour();
+            localStorage.setItem("visitedBefore", "true");
+          }, 2000);
+        }
+      }
+
+      function showTour() {
+        const tourSteps = [
+          {
+            element: "#uploadSection",
+            title: "Upload Excel File",
+            content: "Start by uploading an Excel file containing literature data.",
+          },
+          {
+            element: "#yearButtons",
+            title: "Filter by Year",
+            content: "Click to filter publications by year. You can select multiple years.",
+          },
+          {
+            element: "#categoryButtons",
+            title: "Filter by Category",
+            content: "Filter by research categories. Multiple selections allowed.",
+          },
+          {
+            element: "#searchBar",
+            title: "Search",
+            content: "Search through all fields including titles, authors, and summaries.",
+          },
+          {
+            element: ".star-btn",
+            title: "Star Publications",
+            content: "Click the star to save important papers for later.",
+            onlyIfVisible: true,
+          },
+        ];
+
+        let currentStep = 0;
+
+        function showStep(stepIndex) {
+          // Clear previous tooltip
+          const oldTooltip = document.querySelector(".tour-tooltip");
+          if (oldTooltip) {
+            oldTooltip.remove();
+          }
+
+          if (stepIndex >= tourSteps.length) {
+            return;
+          }
+
+          const step = tourSteps[stepIndex];
+          const targetEl = document.querySelector(step.element);
+          // Check if element is visible
+          if (!targetEl || (step.onlyIfVisible && targetEl.offsetParent === null)) {
+            showStep(stepIndex + 1);
+            return;
+          }
+
+          const tooltip = document.createElement("div");
+          tooltip.className = "tour-tooltip";
+          tooltip.innerHTML = `
+                     <h5>${step.title}</h5>
+                     <p>${step.content}</p>
+                     <div class="d-flex justify-content-between">
+                       <button class="btn btn-sm btn-outline-secondary" id="tour-prev" ${
+                         stepIndex === 0 ? "disabled" : ""
+                       }>Previous</button>
+                       <button class="btn btn-sm btn-outline-secondary" id="tour-skip">Skip Tour</button>
+                       <button class="btn btn-sm btn-primary" id="tour-next">${
+                         stepIndex === tourSteps.length - 1 ? "Finish" : "Next"
+                       }</button>
+                     </div>
+                   `;
+
+          document.body.appendChild(tooltip);
+          const tooltipRect = tooltip.getBoundingClientRect();
+          const rect = targetEl.getBoundingClientRect();
+          let top = rect.bottom + window.scrollY + 10;
+          let left = rect.left + window.scrollX + (rect.width - tooltipRect.width) / 2;
+
+          // Ensure tooltip is within viewport
+          if (left < 10) left = 10;
+          if (left + tooltipRect.width > window.innerWidth - 10) {
+            left = window.innerWidth - tooltipRect.width - 10;
+          }
+
+          tooltip.style.left = `${left}px`;
+          tooltip.style.top = `${top}px`;
+
+          // Add event listeners
+          tooltip.querySelector("#tour-prev").addEventListener("click", () => {
+            showStep(stepIndex - 1);
+          });
+
+          tooltip.querySelector("#tour-skip").addEventListener("click", () => {
+            tooltip.remove();
+          });
+
+          tooltip.querySelector("#tour-next").addEventListener("click", () => {
+            if (stepIndex === tourSteps.length - 1) {
+              tooltip.remove();
+            } else {
+              showStep(stepIndex + 1);
+            }
+          });
+        }
+
+        showStep(0);
+      }
+
+      function updateSelectedYearsDisplay() {
+        const container = document.getElementById("selectedYears");
+        container.innerHTML = "";
+        if (selectedYears.length === 0) {
+          return;
+        }
+        selectedYears.forEach((year) => {
+          const badge = document.createElement("span");
+          badge.className = "selected-year";
+          badge.innerHTML = `${year} <span class="remove" data-year="${year}">×</span>`;
+          container.appendChild(badge);
+        });
+        document.querySelectorAll(".remove[data-year]").forEach((btn) => {
+          btn.addEventListener("click", function () {
+            const year = this.getAttribute("data-year");
+            selectedYears = selectedYears.filter((y) => y !== year);
+            updateYearButtonStyles();
+            updateSelectedYearsDisplay();
+            updateFilterSummary();
+            currentPage = 1;
+            displayPublications(currentPage);
+          });
+        });
+      }
+
+      function updateYearButtonStyles() {
+        document.querySelectorAll("#yearButtons button").forEach((btn) => {
+          if (selectedYears.includes(btn.textContent)) {
+            btn.classList.add("active");
+          } else {
+            btn.classList.remove("active");
+          }
+        });
+      }
+
+      function updateSelectedCategoriesDisplay() {
+        const container = document.getElementById("selectedCategories");
+        container.innerHTML = "";
+        if (selectedCategories.length === 0) {
+          return;
+        }
+        selectedCategories.forEach((cat) => {
+          const badge = document.createElement("span");
+          badge.className = "selected-category";
+          badge.innerHTML = `${cat} <span class="remove" data-category="${cat}">×</span>`;
+          container.appendChild(badge);
+        });
+        document.querySelectorAll(".remove[data-category]").forEach((btn) => {
+          btn.addEventListener("click", function () {
+            const category = this.getAttribute("data-category");
+            selectedCategories = selectedCategories.filter((c) => c !== category);
+            updateCategoryButtonStyles();
+            updateSelectedCategoriesDisplay();
+            updateFilterSummary();
+            currentPage = 1;
+            displayPublications(currentPage);
+          });
+        });
+      }
+
+      function updateCategoryButtonStyles() {
+        const categoryButtonsDiv = document.getElementById("categoryButtons");
+        categoryButtonsDiv.querySelectorAll("button").forEach((btn, i) => {
+          const color = getCategoryColor(btn.textContent);
+          btn.style.backgroundColor = color;
+          btn.classList.add("category-btn");
+        });
+      }
+
+      document.getElementById("loadFile").addEventListener("click", function () {
+        const fileInput = document.getElementById("excelFile");
+        if (!fileInput.files.length) {
+          showFeedback("Please select an Excel file.", true);
+          return;
+        }
+
+        showLoading();
+        const file = fileInput.files[0];
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+          try {
+            const data = new Uint8Array(e.target.result);
+            const workbook = XLSX.read(data, { type: "array" });
+            const sheetName = workbook.SheetNames[0];
+            const worksheet = workbook.Sheets[sheetName];
+            const rawData = XLSX.utils.sheet_to_json(worksheet);
+
+            publications = rawData.map((row) => {
+              const parsedDate = parseExcelDate(row["Date"]);
+              const fullDate = formatDateMDY(parsedDate);
+              const yearOnly = parsedDate ? parsedDate.getFullYear() : "";
+              const catArray = parseCategoryField(row["Category/Field"] || "");
+              const appLines = parseMultiLine(row["Application"] || "");
+
+              return {
+                original: row,
+                title: row["Title"] || "",
+                fullDate: fullDate,
+                yearOnly: yearOnly,
+                categoryArray: catArray,
+                applicationLines: appLines,
+              };
+            });
+
+            populateYearTabs();
+            populateCategoryTabs();
+            selectedYears = [];
+            selectedCategories = [];
+            updateSelectedYearsDisplay();
+            updateSelectedCategoriesDisplay();
+            currentPage = 1;
+            displayPublications(currentPage);
+            showFeedback(`Successfully loaded ${publications.length} publications.`);
+          } catch (error) {
+            console.error("Error processing file:", error);
+            showFeedback("Error processing file. Please check the format.", true);
+          } finally {
+            hideLoading();
+          }
+        };
+
+        reader.onerror = function () {
+          hideLoading();
+          showFeedback("Error reading file", true);
+        };
+
+        reader.readAsArrayBuffer(file);
+      });
+
+      function populateYearTabs() {
+        const yearSet = new Set();
+        publications.forEach((pub) => pub.yearOnly && yearSet.add(pub.yearOnly));
+        const yearButtonsDiv = document.getElementById("yearButtons");
+        yearButtonsDiv.innerHTML = "";
+        Array.from(yearSet)
+          .sort((a, b) => b - a) // Sort in descending order, most recent years first
+          .forEach((year) => {
+            const btn = document.createElement("button");
+            btn.className = "btn btn-outline-primary";
+            btn.textContent = year;
+            btn.addEventListener("click", () => {
+              // Toggle selection state
+              const index = selectedYears.indexOf(year);
+              if (index === -1) {
+                selectedYears.push(year);
+              } else {
+                selectedYears.splice(index, 1);
+              }
+              updateYearButtonStyles();
+              updateSelectedYearsDisplay();
+              updateFilterSummary();
+              currentPage = 1;
+              displayPublications(currentPage);
+            });
+            yearButtonsDiv.appendChild(btn);
+          });
+      }
+
+      document.getElementById("resetYearFilter").addEventListener("click", () => {
+        selectedYears = [];
+        updateYearButtonStyles();
+        updateSelectedYearsDisplay();
+        updateFilterSummary();
+        currentPage = 1;
+        displayPublications(currentPage);
+        showFeedback("Year filter reset");
+      });
+
+      function populateCategoryTabs() {
+        const catSet = new Set();
+        publications.forEach((pub) => pub.categoryArray.forEach((cat) => catSet.add(cat)));
+        const categoryButtonsDiv = document.getElementById("categoryButtons");
+        categoryButtonsDiv.innerHTML = "";
+        Array.from(catSet)
+          .sort()
+          .forEach((cat, i) => {
+            const btn = document.createElement("button");
+            btn.textContent = cat;
+            btn.addEventListener("click", () => {
+              // Toggle selection state
+              const index = selectedCategories.indexOf(cat);
+              if (index === -1) {
+                selectedCategories.push(cat);
+              } else {
+                selectedCategories.splice(index, 1);
+              }
+              updateSelectedCategoriesDisplay();
+              updateFilterSummary();
+              currentPage = 1;
+              displayPublications(currentPage);
+            });
+            categoryButtonsDiv.appendChild(btn);
+          });
+        updateCategoryButtonStyles();
+      }
+
+      document.getElementById("resetCategoryFilter").addEventListener("click", () => {
+        selectedCategories = [];
+        updateSelectedCategoriesDisplay();
+        updateFilterSummary();
+        currentPage = 1;
+        displayPublications(currentPage);
+        updateCategoryButtonStyles();
+        showFeedback("Category filter reset");
+      });
+
+      document.getElementById("searchBar").addEventListener("input", () => {
+        searchTerm = document.getElementById("searchBar").value.trim().toLowerCase();
+        updateFilterSummary();
+        currentPage = 1;
+        displayPublications(currentPage);
+      });
+
+      function updatePagination(totalItems) {
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
+        const pagination = document.getElementById("pagination");
+        pagination.innerHTML = "";
+
+        // Don't show pagination if there's only one page
+        if (totalPages <= 1) return;
+
+        // Add previous button
+        const prevLi = document.createElement("li");
+        prevLi.className = `page-item ${currentPage === 1 ? "disabled" : ""}`;
+        prevLi.innerHTML = `<a class="page-link" href="#">&laquo;</a>`;
+        if (currentPage !== 1) {
+          prevLi.addEventListener("click", () => {
+            currentPage--;
+            displayPublications(currentPage);
+          });
+        }
+        pagination.appendChild(prevLi);
+
+        // Determine page range to show
+        let startPage = Math.max(1, currentPage - 2);
+        let endPage = Math.min(totalPages, startPage + 4);
+        if (endPage - startPage < 4) {
+          startPage = Math.max(1, endPage - 4);
+        }
+
+        // Add page buttons
+        for (let i = startPage; i <= endPage; i++) {
+          const li = document.createElement("li");
+          li.className = `page-item ${i === currentPage ? "active" : ""}`;
+          li.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+          li.addEventListener("click", () => {
+            currentPage = i;
+            displayPublications(currentPage);
+          });
+          pagination.appendChild(li);
+        }
+
+        // Add next button
+        const nextLi = document.createElement("li");
+        nextLi.className = `page-item ${currentPage === totalPages ? "disabled" : ""}`;
+        nextLi.innerHTML = `<a class="page-link" href="#">&raquo;</a>`;
+        if (currentPage !== totalPages) {
+          nextLi.addEventListener("click", () => {
+            currentPage++;
+            displayPublications(currentPage);
+          });
+        }
+        pagination.appendChild(nextLi);
+      }
+
+      // Added category color mapping functionality
+      const categoryColors = {};
+      let colorIndex = 1;
+
+      function getCategoryColor(category) {
+        if (!categoryColors[category]) {
+          categoryColors[category] = `var(--cat-color-${colorIndex})`;
+          colorIndex = colorIndex === 9 ? 1 : colorIndex + 1; // Cycle through 9 colors
+        }
+        return categoryColors[category];
+      }
+
+      function displayCategoryTags(categories) {
+        if (!categories || !categories.length) return "";
+
+        const tagsHtml = categories
+          .map((cat) => {
+            const color = getCategoryColor(cat);
+            return `<span class="category-tag" style="background-color: ${color};">${cat}</span>`;
+          })
+          .join("");
+
+        return tagsHtml;
+      }
+
+      function displayPublications(page = 1) {
+        const list = document.querySelector("#paperList ul");
+        list.innerHTML = "";
+
+        // Reset color index to ensure consistent color mapping each time
+        colorIndex = 1;
+
+        const filtered = publications.filter((pub) => {
+          // Year filter - multi-select mode
+          if (selectedYears.length > 0 && !selectedYears.includes(pub.yearOnly)) {
+            return false;
+          }
+
+          // Multi-select category filter - if there are selected categories, match at least one
+          if (selectedCategories.length > 0) {
+            const hasMatchingCategory = pub.categoryArray.some((cat) => selectedCategories.includes(cat));
+            if (!hasMatchingCategory) return false;
+          }
+
+          // Search filter
+          if (searchTerm && !JSON.stringify(pub.original).toLowerCase().includes(searchTerm)) return false;
+
+          return true;
+        });
+
+        // Save current filtered items for detail page navigation
+        // This ensures arrow navigation works through ALL filtered items, not just the current page
+        currentFilteredItems = filtered;
+
+        // Show clear stars button
+        document.getElementById("clearAllStars").style.display = starredPapers.size > 0 ? "block" : "none";
+
+        // Calculate pagination boundaries
+        const start = (page - 1) * itemsPerPage;
+        const end = Math.min(start + itemsPerPage, filtered.length);
+        const paginatedItems = filtered.slice(start, end);
+
+        // Update the pagination controls
+        updatePagination(filtered.length);
+
+        // Show result count feedback
+        showFeedback(`Showing ${paginatedItems.length} of ${filtered.length} results`);
+
+        // Show message if no results
+        if (paginatedItems.length === 0) {
+          const emptyMessage = document.createElement("div");
+          emptyMessage.className = "alert alert-info mt-3";
+          emptyMessage.textContent = "No publications found matching your criteria.";
+          list.appendChild(emptyMessage);
+          return;
+        }
+
+        paginatedItems.forEach((pub, index) => {
+          const li = document.createElement("li");
+          li.className = "list-group-item";
+
+          if (starredPapers.has(publications.indexOf(pub))) {
+            li.classList.add("starred");
+          }
+
+          const appHtml = pub.applicationLines.map((line) => `<div>${line}</div>`).join("");
+          const categoryTags = displayCategoryTags(pub.categoryArray);
+
+          // Adjust display order
+          li.innerHTML = `
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="text-muted">${pub.yearOnly}</div>
+              <button class="btn btn-sm btn-warning star-btn" data-index="${index}">
+                <i class="fas fa-star"></i>
+              </button>
+            </div>
+            <div class="paper-title" data-index="${index}">${pub.title}</div>
+            <div class="text-muted">${appHtml}</div>
+            <div class="category-tags">${categoryTags}</div>
+          `;
+
+          list.appendChild(li);
+        });
+
+        document.querySelectorAll(".paper-title").forEach((item, i) => {
+          item.addEventListener("click", function () {
+            const localIndex = Number(this.getAttribute("data-index"));
+            currentDetailIndex = start + localIndex;
+            showDetailModal(paginatedItems[localIndex]);
+          });
+        });
+
+        document.querySelectorAll(".star-btn").forEach((btn, i) => {
+          btn.addEventListener("click", function () {
+            const localIndex = Number(this.getAttribute("data-index"));
+            const pubObj = paginatedItems[localIndex];
+            const fullIndex = publications.indexOf(pubObj);
+
+            if (starredPapers.has(fullIndex)) {
+              starredPapers.delete(fullIndex);
+              this.parentElement.parentElement.classList.remove("starred");
+              showFeedback("Publication removed from starred");
+            } else {
+              starredPapers.add(fullIndex);
+              this.parentElement.parentElement.classList.add("starred");
+              showFeedback("Publication added to starred");
+            }
+
+            // Update clear stars button visibility
+            document.getElementById("clearAllStars").style.display = starredPapers.size > 0 ? "block" : "none";
+          });
+        });
+
+        enableDoubleClickStar();
+      }
+
+      // Improved detail modal handling
+      function showDetailModal(pub) {
+        const tbody = document.querySelector(".detail-table tbody");
+        tbody.innerHTML = "";
+
+        // Update navigation button states
+        document.getElementById("prevPaper").disabled = currentDetailIndex <= 0;
+        document.getElementById("nextPaper").disabled = currentDetailIndex >= currentFilteredItems.length - 1;
+
+        // Array to store all fields to display in the desired order
+        const orderedFields = [];
+        
+        // First, extract the Date field and store it for insertion first
+        let dateField = null;
+        for (const key in pub.original) {
+          if (key === "Date") {
+            dateField = { key: key, value: pub.fullDate || pub.original[key] || "" };
+          } else {
+            orderedFields.push({ key: key, value: pub.original[key] || "" });
+          }
+        }
+        
+        // Insert Date first if it exists
+        if (dateField) {
+          createDetailRow(dateField.key, dateField.value, tbody);
+        }
+        
+        // Then add all other fields
+        orderedFields.forEach(field => {
+          createDetailRow(field.key, field.value, tbody);
+        });
+
+        // Note: Keyboard arrow navigation has been disabled
+        // The next and previous navigation is only available through the buttons
+
+        $("#detailModal").modal("show");
+        
+        // Scroll to the top of the modal to ensure Date field is visible first
+        setTimeout(() => {
+          document.querySelector(".modal-body").scrollTop = 0;
+        }, 100);
+      }
+
+      // Helper function to create a row in the detail table
+      function createDetailRow(key, value, tbody) {
+        const tr = document.createElement("tr");
+        const tdKey = document.createElement("th");
+        tdKey.textContent = key;
+        const tdValue = document.createElement("td");
+
+        // General link handling - completely rewritten to fix URL display issues
+        const autoLink = (text) => {
+          if (!text) return "";
+
+          let processedText = text.toString();
+
+          // Handle special link formats like "GitHub Link: URL"
+          processedText = processedText.replace(
+            /(GitHub|GitLab|Lab|Website|Project|Demo)\s*Link:\s*(https?:\/\/[^\s,)]+)/gi,
+            (match, type, url) => {
+              return `${type} link：<a href="${url}" target="_blank">${url}</a>`;
+            }
+          );
+
+          // Handle plain URL links
+          processedText = processedText.replace(/(https?:\/\/[^\s,)]+)/g, '<a href="$1" target="_blank">$1</a>');
+
+          // Handle Markdown link format [text](url)
+          processedText = processedText.replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g, (match, text, url) => {
+            return `${text}：<a href="${url}" target="_blank">${url}</a>`;
+          });
+
+          return processedText;
+        };
+
+        // Special handling for category field, adding color tags
+        if (key === "Category/Field") {
+          const categories = parseMultiLine(value);
+          tdValue.innerHTML = displayCategoryTags(categories);
+        } else if (key === "Date") {
+          // Use formatted date
+          tdValue.textContent = value;
+        } else if (["Authors", "Application"].includes(key)) {
+          tdValue.innerHTML = parseMultiLine(value)
+            .map((l) => `<div>${autoLink(l)}</div>`)
+            .join("");
+        } else if (key === "customer info/lab page links" || key === "Paper link") {
+          // Direct links
+          const url = value.trim();
+          if (url) {
+            if (url.startsWith("http")) {
+              tdValue.innerHTML = `<a href="${url}" target="_blank">${url}</a>`;
+            } else {
+              tdValue.innerHTML = url;
+            }
+          }
+        } else if (key === "Summary" || key === "Additional Notes/Highlights") {
+          // Use specially formatted summary
+          tdValue.innerHTML = transformSummary(value);
+        } else {
+          // General field handling
+          tdValue.innerHTML = autoLink(value);
+        }
+
+        tr.appendChild(tdKey);
+        tr.appendChild(tdValue);
+        tbody.appendChild(tr);
+      }
+
+      document.getElementById("downloadStarred").addEventListener("click", function () {
+        if (starredPapers.size === 0) {
+          showFeedback("No starred papers to download", true);
+          return;
+        }
+
+        let content = "";
+        starredPapers.forEach((starID) => {
+          const pub = publications[starID];
+          if (pub) {
+            content +=
+              Object.entries(pub.original)
+                .map(([k, v]) => {
+                  // Special handling for Date field, use formatted date
+                  if (k === "Date") {
+                    return `${k}: ${pub.fullDate}`;
+                  }
+                  return `${k}: ${v}`;
+                })
+                .join("\n") + "\n\n";
+          }
+        });
+
+        const blob = new Blob([content || "No starred papers found."], { type: "text/plain" });
+        const link = document.createElement("a");
+        link.href = window.URL.createObjectURL(blob);
+        link.download = "starred_papers.txt";
+        link.click();
+
+        showFeedback(`Downloaded ${starredPapers.size} starred papers`);
+      });
+
+      function initBackToTop() {
+        const backToTopBtn = document.getElementById("backToTop");
+
+        // Listen for scroll event to show/hide back to top button
+        window.addEventListener("scroll", () => {
+          if (window.pageYOffset > 300) {
+            backToTopBtn.classList.add("show");
+          } else {
+            backToTopBtn.classList.remove("show");
+          }
+        });
+
+        // Click back to top button
+        backToTopBtn.addEventListener("click", () => {
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
+        });
+      }
+
+      // Added double-click to star list item functionality
+      function enableDoubleClickStar() {
+        document.querySelectorAll(".list-group-item").forEach((item, i) => {
+          item.addEventListener("dblclick", function () {
+            const index = Number(this.querySelector(".star-btn").getAttribute("data-index"));
+            const pubObj = currentFilteredItems[index];
+            const fullIndex = publications.indexOf(pubObj);
+
+            if (starredPapers.has(fullIndex)) {
+              starredPapers.delete(fullIndex);
+              this.classList.remove("starred");
+              showFeedback("Publication removed from starred");
+            } else {
+              starredPapers.add(fullIndex);
+              this.classList.add("starred");
+              showFeedback("Publication added to starred");
+            }
+
+            // Update clear stars button visibility
+            document.getElementById("clearAllStars").style.display = starredPapers.size > 0 ? "block" : "none";
+          });
+        });
+      }
+
+      // Added fullscreen functionality
+      function toggleFullscreenModal() {
+        // Remove fullscreen functionality
+      }
+
+      // Initialize particle background
+      function initParticlesBackground() {
+        if (typeof particlesJS !== "undefined") {
+          particlesJS("particles-background", {
+            particles: {
+              number: {
+                value: 30, // Reduced from 80 to 30 for fewer particles
+                density: {
+                  enable: true,
+                  value_area: 1000, // Increased from 800 for more space between particles
+                },
+              },
+              color: {
+                value: "#0069ff",
+              },
+              opacity: {
+                value: 0.1,
+                random: false,
+              },
+              size: {
+                value: 3,
+                random: true,
+              },
+              line_linked: {
+                enable: true,
+                distance: 150,
+                color: "#0069ff",
+                opacity: 0.1,
+                width: 1,
+              },
+              move: {
+                enable: true,
+                speed: 1,
+                direction: "none",
+                random: true,
+                straight: false,
+                out_mode: "out",
+                bounce: false,
+              },
+            },
+            interactivity: {
+              detect_on: "canvas",
+              events: {
+                onhover: {
+                  enable: true,
+                  mode: "grab",
+                },
+                resize: true,
+              },
+              modes: {
+                grab: {
+                  distance: 140,
+                  line_linked: {
+                    opacity: 0.3,
+                  },
+                },
+              },
+            },
+          });
+        }
+      }
+
+      // Initialize theme customization panel
+      document.addEventListener("DOMContentLoaded", function () {
+        // Theme customization setup
+        const themeToggleBtn = document.getElementById("themeToggleBtn");
+        const themeCustomizer = document.getElementById("themeCustomizer");
+        const closeCustomizer = document.querySelector(".close-customizer");
+        const backdrop = document.querySelector(".theme-customizer-backdrop");
+        const saveThemeBtn = document.getElementById("saveThemeBtn");
+        const resetThemeBtn = document.getElementById("resetThemeBtn");
+        const particleToggleBtn = document.getElementById("particleToggleBtn");
+
+        // Color pickers
+        const primaryColorPicker = document.getElementById("primaryColorPicker");
+        const accentColorPicker = document.getElementById("accentColorPicker");
+        const bgStartColorPicker = document.getElementById("bgStartColorPicker");
+        const bgEndColorPicker = document.getElementById("bgEndColorPicker");
+        
+        // Initialize particle toggle button
+        if (localStorage.getItem("particlesVisible") === "false") {
+          document.getElementById("particles-background").style.display = "none";
+          particleToggleBtn.innerHTML = '<i class="fas fa-eye-slash"></i>';
+        }
+        
+        // Add event listener for particle toggle
+        particleToggleBtn.addEventListener("click", function() {
+          const particlesEl = document.getElementById("particles-background");
+          if (particlesEl.style.display === "none") {
+            particlesEl.style.display = "block";
+            particleToggleBtn.innerHTML = '<i class="fas fa-atom"></i>';
+            localStorage.setItem("particlesVisible", "true");
+            showFeedback("Particles enabled");
+          } else {
+            particlesEl.style.display = "none";
+            particleToggleBtn.innerHTML = '<i class="fas fa-eye-slash"></i>';
+            localStorage.setItem("particlesVisible", "false");
+            showFeedback("Particles disabled");
+          }
+        });
+
+        // Default theme colors
+        const defaultColors = {
+          primaryBlue: "#0069ff",
+          accentTeal: "#00c1d4",
+          lightBg: "#f0f4f8",
+          lightBgEnd: "#d9e2ec",
+        };
+
+        // Load any saved custom theme
+        const savedTheme = localStorage.getItem("customTheme");
+        if (savedTheme) {
+          const theme = JSON.parse(savedTheme);
+          document.documentElement.style.setProperty("--primary-blue", theme.primaryBlue);
+          document.documentElement.style.setProperty("--accent-teal", theme.accentTeal);
+          document.documentElement.style.setProperty("--light-bg", theme.lightBg);
+          document.documentElement.style.setProperty("--light-bg-end", theme.lightBgEnd);
+
+          // Update color pickers
+          primaryColorPicker.value = theme.primaryBlue;
+          accentColorPicker.value = theme.accentTeal;
+          bgStartColorPicker.value = theme.lightBg;
+          bgEndColorPicker.value = theme.lightBgEnd;
+        }
+
+        // Toggle the theme customizer
+        themeToggleBtn.addEventListener("click", function () {
+          themeCustomizer.classList.add("show");
+          backdrop.classList.add("show");
+        });
+
+        // Close the customizer
+        closeCustomizer.addEventListener("click", function () {
+          themeCustomizer.classList.remove("show");
+          backdrop.classList.remove("show");
+        });
+
+        backdrop.addEventListener("click", function () {
+          themeCustomizer.classList.remove("show");
+          backdrop.classList.remove("show");
+        });
+
+        // Save theme
+        saveThemeBtn.addEventListener("click", function () {
+          const customTheme = {
+            primaryBlue: primaryColorPicker.value,
+            accentTeal: accentColorPicker.value,
+            lightBg: bgStartColorPicker.value,
+            lightBgEnd: bgEndColorPicker.value,
+          };
+
+          // Apply theme
+          document.documentElement.style.setProperty("--primary-blue", customTheme.primaryBlue);
+          document.documentElement.style.setProperty("--accent-teal", customTheme.accentTeal);
+          document.documentElement.style.setProperty("--light-bg", customTheme.lightBg);
+          document.documentElement.style.setProperty("--light-bg-end", customTheme.lightBgEnd);
+
+          // Save in local storage
+          localStorage.setItem("customTheme", JSON.stringify(customTheme));
+
+          // Update particles to match theme
+          if (typeof particlesJS !== "undefined") {
+            particlesJS("particles-background", {
+              particles: {
+                color: { value: customTheme.primaryBlue },
+                line_linked: { color: customTheme.primaryBlue },
+              },
+            });
+          }
+
+          showFeedback("Theme applied successfully");
+          themeCustomizer.classList.remove("show");
+          backdrop.classList.remove("show");
+        });
+
+        // Reset theme to defaults
+        resetThemeBtn.addEventListener("click", function () {
+          // Reset to defaults
+          document.documentElement.style.setProperty("--primary-blue", defaultColors.primaryBlue);
+          document.documentElement.style.setProperty("--accent-teal", defaultColors.accentTeal);
+          document.documentElement.style.setProperty("--light-bg", defaultColors.lightBg);
+          document.documentElement.style.setProperty("--light-bg-end", defaultColors.lightBgEnd);
+
+          // Update color pickers
+          primaryColorPicker.value = defaultColors.primaryBlue;
+          accentColorPicker.value = defaultColors.accentTeal;
+          bgStartColorPicker.value = defaultColors.lightBg;
+          bgEndColorPicker.value = defaultColors.lightBgEnd;
+
+          // Remove from local storage
+          localStorage.removeItem("customTheme");
+
+          // Update particles
+          if (typeof particlesJS !== "undefined") {
+            particlesJS("particles-background", {
+              particles: {
+                color: { value: defaultColors.primaryBlue },
+                line_linked: { color: defaultColors.primaryBlue },
+              },
+            });
+          }
+
+          showFeedback("Theme reset to default");
+        });
+      });
+
+      // Highlight search terms in text
+      function highlightSearchTerms(text, searchTerm) {
+        if (!searchTerm || !text) return text;
+
+        const searchTerms = searchTerm.split(" ").filter((term) => term.length > 2);
+        let processedText = text.toString();
+
+        searchTerms.forEach((term) => {
+          const regex = new RegExp("(" + term + ")", "gi");
+          processedText = processedText.replace(regex, '<span class="search-highlight">$1</span>');
+        });
+
+        return processedText;
+      }
+    </script>
+  </body>
+</html>
